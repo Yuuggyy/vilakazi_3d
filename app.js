@@ -580,7 +580,7 @@ function saveParametres() {
 }
 
 function resetStore() {
-  if (!confirm('⚠️ Cela effacera toutes les données et rechargera le menu d\\'origine. Continuer ?')) return;
+  if (!confirm('⚠️ Cela effacera toutes les données et rechargera le menu d\'origine. Continuer ?')) return;
   localStorage.removeItem(STORE_KEY);
   store = loadStore();
   renderAdminTab();

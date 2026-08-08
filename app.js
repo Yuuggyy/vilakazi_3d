@@ -2,7 +2,7 @@
 // APP.JS — Menu 3D Restaurant (No Database / localStorage)
 // ============================================
 
-const STORE_KEY = (RESTAURANT_DATA.slug || 'restaurant') + '_store';
+const STORE_KEY = (RESTAURANT_DATA.slug || 'restaurant') + '_store_v2';
 const ADMIN_PASSWORD = RESTAURANT_DATA.adminPassword || 'admin123';
 
 // ── Storage helpers ──

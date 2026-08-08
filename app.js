@@ -350,7 +350,7 @@ function renderAdminLogin() {
   app.innerHTML = `
     <div class="admin-login">
       <div class="admin-login-card">
-        <div class="admin-login-logo">${RESTAURANT_DATA.emoji || '🍽️'}</div>
+        <div class="admin-login-logo">${store.parametres.logo_url ? `<img src="${store.parametres.logo_url}" alt="${escapeHtml(RESTAURANT_DATA.name)}" style="width:100%;height:100%;object-fit:contain;border-radius:50%">` : (RESTAURANT_DATA.emoji || '🍽️')}</div>
         <h1 class="admin-login-title">${escapeHtml(RESTAURANT_DATA.name)}</h1>
         <p class="admin-login-sub">Espace Administration</p>
         <div class="admin-login-form">

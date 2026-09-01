@@ -541,6 +541,15 @@ function ParametresTab() {
     setPreview(data?.logo_url || null);
   };
 
+  const handleToggleOuvert = async () => {
+    setError(''); setSuccess('');
+    const nextVal = !(params?.ouvert !== false);
+    const { error } = await updateParametres({ ouvert: nextVal });
+    if (error) { setError(error.message); return; }
+    setSuccess(nextVal ? '✅ Restaurant réactivé — les commandes sont de nouveau possibles.' : '⛔ Restaurant mis en pause — les clients ne peuvent plus commander.');
+    load();
+  };
+
   useEffect(() => { load(); }, []);
 
   const handleFileChange = async (e) => {
@@ -607,6 +616,30 @@ function ParametresTab() {
 
       {success && <div style={{ background: 'rgba(30,132,73,0.10)', border: '1px solid rgba(30,132,73,0.3)', borderRadius: 10, padding: '10px 16px', marginBottom: 16, color: C.successDark, fontSize: 13 }}>{success}</div>}
       {error   && <div style={{ background: 'rgba(192,57,43,0.10)', border: '1px solid rgba(192,57,43,0.3)', borderRadius: 10, padding: '10px 16px', marginBottom: 16, color: C.dangerDark, fontSize: 13 }}>⚠️ {error}</div>}
+
+      {/* Statut ouvert / en pause */}
+      <div style={cardStyle}>
+        <h3 style={{ color: C.primary, marginBottom: 12, fontSize: 16, fontWeight: 700 }}>🔌 Statut du restaurant</h3>
+        <p style={{ fontSize: 13, color: C.darkSoft, marginBottom: 16 }}>
+          Quand c'est en pause, la carte reste visible aux clients mais ils ne peuvent plus passer commande.
+        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <span style={{
+            padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 700,
+            background: params?.ouvert === false ? 'rgba(192,57,43,0.12)' : 'rgba(30,132,73,0.12)',
+            color: params?.ouvert === false ? C.dangerDark : C.successDark,
+          }}>
+            {params?.ouvert === false ? '⛔ En pause' : '🟢 Ouvert'}
+          </span>
+          <button onClick={handleToggleOuvert} style={{
+            padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13,
+            background: params?.ouvert === false ? `linear-gradient(135deg, #1E8449, #27AE60)` : `linear-gradient(135deg, ${C.dangerDark || '#8E2A1E'}, #C0392B)`,
+            color: '#fff',
+          }}>
+            {params?.ouvert === false ? '▶️ Réactiver les commandes' : '⏸️ Mettre en pause'}
+          </button>
+        </div>
+      </div>
 
       {/* Logo */}
       <div style={cardStyle}>

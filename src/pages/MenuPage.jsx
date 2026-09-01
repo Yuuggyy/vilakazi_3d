@@ -66,6 +66,10 @@ export default function MenuPage() {
   };
 
   const handleAdd = (produit) => {
+    if (parametres && parametres.ouvert === false) {
+      showToast('⛔ Restaurant fermé pour le moment — commandes indisponibles');
+      return;
+    }
     setPanier(prev => {
       const idx = prev.findIndex(i => i.id === produit.id);
       if (idx >= 0) { const n = [...prev]; n[idx] = { ...n[idx], quantite: n[idx].quantite + produit.quantite }; return n; }
@@ -160,6 +164,11 @@ export default function MenuPage() {
 
       {/* ── CONTENU — scroll natif de la page ── */}
       <div style={{ maxWidth: 960, margin: '0 auto', padding: isMobile ? '16px 0 80px' : '24px 32px 80px', boxSizing: 'border-box' }}>
+        {!loading && parametres && parametres.ouvert === false && (
+          <div style={{ margin: isMobile ? '0 16px 16px' : '0 0 16px', padding: '14px 18px', borderRadius: 12, background: 'rgba(192,57,43,0.10)', border: '1px solid rgba(192,57,43,0.35)', color: '#8E2A1E', fontSize: 14, fontWeight: 600, textAlign: 'center' }}>
+            ⛔ Fermé pour le moment — la carte est consultable mais les commandes sont désactivées.
+          </div>
+        )}
         {loading ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, padding: '80px 0' }}>
             <div className="spinner" />
